@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Document</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+        body{
+            font-family: 'Source Code Pro', monospace;
+            display: flex;
+            justify-content: center;
+        }
+        .conteudo{
+            width: 500px;
+            margin-top: 20px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px black;
+            
+        }
+
+        .conteudo h1{
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .linha{
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: center;
+        }
+        span{
+            width: 70%;
+            height: 1px;
+            background-color: rgb(219, 219, 219);
+            border-radius: 5px;
+        }
+
+        .conteudo label{
+            margin-bottom: 5px;
+        }
+        .conteudo input, select{
+            font-family: 'Source Code Pro', monospace;
+            margin-bottom: 15px;
+            padding: 5px;
+            border: 2px solid rgb(143, 143, 143);
+            border-radius: 5px;
+        }
+
+        .conteudo #calcular{
+            font-size: 15px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            color: rgb(25, 73, 35);
+            background-color: yellowgreen;
+            border: none;
+            padding: 10px;
+            transition: all .2s;
+        }
+
+        label{
+            font-weight: bold;
+        }
+
+        .conteudo #calcular:hover{
+            cursor: pointer;
+            color: rgb(255, 255, 255);
+            background-color: rgb(59, 78, 19);
+        }
+
+        .conteudo label i{
+            font-size: 15px;
+        }
+
+        .conteudo .aviso{
+            font-size: 12px;
+            font-style: italic;
+            background-color: rgb(201, 201, 201);
+            border: 1px solid rgb(190, 190, 190);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .versao{
+            text-align: right;
+            font-size: 12px;
+            font-style: italic;
+            padding: 5px;
+        }
+
+        .versao a{
+            text-decoration: none;
+            font-weight: 800;
+            color: rgb(12, 93, 199);
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div class="conteudo">
+        <h1>Calculo de Subsistência</h1>
+        <div class="linha"><span></span></div>
+    
+        
+        <label for=""><i class="em em-flag-pt" aria-role="presentation" aria-label="Portugal Flag"></i> Ordenado Mínimo</label>
+        <select id="salario">
+          <option value="760">€ 760 (2023)</option>
+          <option value="820">€ 820 (2024)</option>
+          <option value="870">€ 870 (2025)</option>
+          <option value="920">€ 920 (2026)</option>
+          <option value="970">€ 970 (2027)</option>
+          <option value="1020">€ 1.020 (2028)</option>
+      </select>
+
+        <label for=""><i class="em em-hourglass" aria-role="presentation" aria-label="HOURGLASS"></i> Mês (quantidade)</label>
+        <select id="meses">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+      </select>
+
+        <label for=""><i class="em em-busts_in_silhouette" aria-role="presentation" aria-label="BUSTS IN SILHOUETTE"></i> Número de Pessoas</label>
+        <select id="pessoas">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+      </select>
+
+        <label for=""><i class="em em-flag-eu" aria-role="presentation" aria-label="European Union Flag"></i> Valor do Euro</label>
+        <input type="number" id="euro">
+
+        <input type="submit" class="btnCalcular" id="calcular" value="CALCULAR">
+        <div id="margemFonte"></div>
+        <div id="resultado"></div>
+        <div id="resultadoReal"></div>
+        <div class="aviso">Aviso: Esta calculadora fornece apenas uma estimativa média do valor, que pode variar de acordo com a cotação atual do câmbio e a margem de reserva que você pretende manter. Recomenda-se verificar os valores atualizados e considerar as variações do mercado antes de tomar qualquer decisão.</div>
+        
+        <div class="versao"><a href="https://github.com/codebraga/calculadora-subsidio-pt/blob/main/README.md">logs </a>v1.1</div>
+    </div>
+</body>
+
+<script src="dark-mode.js"></script>
+
+<script>
+    // Evento de clique no botão
+    document.getElementById('calcular').addEventListener('click', function(){
+        // Pega os valores dos inputs e converte para números com parseFloat
+        const salario = parseFloat(document.getElementById('salario').value)
+        const meses = parseFloat(document.getElementById('meses').value)
+        const pessoas = parseFloat(document.getElementById('pessoas').value)
+        const euro = parseFloat(document.getElementById('euro').value)
+
+        // Margem de segurança do euro
+        const margem = 0.12
+
+        // Calcula a margem de segurança do euro
+        const calculoMargem = euro + margem
+
+        // Multiplica o (salario * meses) * pessoas
+        const resultado = (salario * meses) * pessoas
+
+        const totalReal = resultado * calculoMargem
+
+        // Valores formatados
+        const totalRealFormatado = totalReal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})
+        const resultadoFormatado = resultado.toLocaleString('pt-BR', {style: 'currency', currency: 'EUR'})
+        const calculoMargemFormatado = calculoMargem.toLocaleString('pt-BR', {style: 'currency', currency: 'EUR'})
+
+        if (!euro){
+            document.getElementById('margemFonte').innerHTML = ''
+        } else if (!salario || !meses || !pessoas) {
+            document.getElementById('margemFonte').innerHTML = ''
+        } else {
+            
+            document.getElementById('resultadoReal').innerHTML = `Total em ${totalRealFormatado}`
+        }
+        // Se o input do euro estiver vazio ele não mostra a mensagemFonte
+        if (!euro) {
+            document.getElementById('margemFonte').innerHTML = ''
+        } else {
+            document.getElementById('margemFonte').innerHTML = `Margem de segurança do euro: ${calculoMargemFormatado}`
+            document.getElementById('margemFonte').style.fontSize = '15px'
+            document.getElementById('margemFonte').style.fontStyle = 'italic'
+            document.getElementById('margemFonte').style.fontWeight = '700'
+            document.getElementById('margemFonte').style.color = '#b32222'
+            document.getElementById('margemFonte').style.marginBottom = '10px'
+        }
+
+        // Valida campos vazios e exibe mensagem em alerta
+        if (!salario || !meses || !pessoas) {
+            document.getElementById('resultado').innerHTML = 'Por favor, preencha todos os campos!'
+            document.getElementById('resultado').style.color = 'red'
+            return;
+        } else {
+            document.getElementById('resultado').innerHTML = `Total em ${resultadoFormatado}`
+            document.getElementById('resultado').style.color = 'black'
+        }
+    })
+</script>
+</html>
