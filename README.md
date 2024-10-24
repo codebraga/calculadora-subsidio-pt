@@ -1,3 +1,7 @@
 # calculadora-subsidio-pt
 
-[Calculadora]([https://link-url-here.org](https://codebraga.github.io/calculadora-subsidio-pt/calculadora.html))
+[Calculadora](https://codebraga.github.io/calculadora-subsidio-pt/calculadora.html)
+
+
+
+### v1.0
